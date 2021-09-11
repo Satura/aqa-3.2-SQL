@@ -23,4 +23,17 @@ public class ConnectionHelper {
         return runn.query(conn, "SELECT code FROM auth_codes", new ScalarHandler<>());
     }
 
+    @SneakyThrows
+    public static void wipeData(){
+        runn.execute(conn,"TRUNCATE TABLE auth_codes;");
+        runn.execute(conn,"TRUNCATE TABLE cards;");
+        runn.execute(conn,"TRUNCATE TABLE card_transactions;");
+        runn.execute(conn,"DELETE FROM users;");
+    }
+
+    @SneakyThrows
+    public static void wipeCode(){
+        runn.execute(conn,"TRUNCATE TABLE auth_codes;");
+    }
+
 }
