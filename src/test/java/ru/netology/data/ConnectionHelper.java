@@ -36,4 +36,10 @@ public class ConnectionHelper {
         runn.execute(conn,"TRUNCATE TABLE auth_codes;");
     }
 
+    @SneakyThrows
+    public static String getStatusFor(String user) {
+        var statusSql = "SELECT status FROM users WHERE login = '" + user + "'";
+        return runn.query(conn, statusSql, new ScalarHandler<>());
+    }
+
 }

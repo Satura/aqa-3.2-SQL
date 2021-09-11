@@ -7,8 +7,10 @@ import ru.netology.data.DataHelper;
 import ru.netology.pages.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
-import static ru.netology.data.ConnectionHelper.wipeCode;
-import static ru.netology.data.ConnectionHelper.wipeData;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static ru.netology.data.ConnectionHelper.*;
+import static ru.netology.data.DataHelper.getAuthInfo;
+import static ru.netology.data.DataHelper.getToBlockAuthInfo;
 import static ru.netology.data.Launcher.launch;
 
 public class LoginFuncTests {
@@ -36,7 +38,7 @@ public class LoginFuncTests {
     @Test
     void shouldLogin() {
         val loginPage = new LoginPage();
-        val authInfo = DataHelper.getAuthInfo();
+        val authInfo = getAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
         val verificationCode = ConnectionHelper.getCode();
         val dashboardPage = verificationPage.validVerify(verificationCode);
@@ -46,7 +48,7 @@ public class LoginFuncTests {
     @Test
     void shouldNotVerify() {
         val loginPage = new LoginPage();
-        val authInfo = DataHelper.getAuthInfo();
+        val authInfo = getAuthInfo();
         val verificationPage = loginPage.validLogin(authInfo);
         val invalidVerificationCode = DataHelper.getInvalidVerificationCode();
         verificationPage.invalidVerify(invalidVerificationCode);
@@ -57,6 +59,18 @@ public class LoginFuncTests {
         val loginPage = new LoginPage();
         val invalidAuthInfo = DataHelper.getInvalidAuthInfo();
         loginPage.invalidLogin(invalidAuthInfo);
+    }
+
+    @Test
+    void shouldBlockIncorrectPassword() {
+        val loginPage = new LoginPage();
+        val blockerAuthInfo = getToBlockAuthInfo();
+        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.invalidLogin(blockerAuthInfo);
+        String actual = getStatusFor(getAuthInfo().getLogin());
+        System.out.println(actual);
+        assertEquals("blocked", actual);
     }
 
 }

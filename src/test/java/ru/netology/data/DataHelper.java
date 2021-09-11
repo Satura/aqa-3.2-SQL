@@ -23,6 +23,10 @@ public class DataHelper {
         return new AuthInfo(faker.name().username(), faker.internet().password());
     }
 
+    public static AuthInfo getToBlockAuthInfo(){
+        return new AuthInfo("petya","987987");
+    }
+
     @Value
     public static class VerificationCode {
         private String code;
