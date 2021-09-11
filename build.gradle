@@ -28,6 +28,6 @@ dependencies {
 
 test {
     useJUnitPlatform()
-    systemProperty 'selenide.browser', System.getProperty('selenide.browser', "firefox")
+    //systemProperty 'selenide.browser', System.getProperty('selenide.browser', "firefox")
     systemProperty 'selenide.headless', System.getProperty('selenide.headless', "true")
 }
