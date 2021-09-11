@@ -16,7 +16,7 @@ install:
   - sudo apt-get install wait-for-it > /dev/null
   - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
-  - docker-compose -f /home/appveyor/projects/aqa-3.2-SQL/docker-compose.yml up --build -d
+  - docker-compose -f up --build -d
   - sleep 15
   - docker ps
   - java -jar artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/db_app -P:jdbc.user=app -P:jdbc.password=pass &
