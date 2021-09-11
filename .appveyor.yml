@@ -19,9 +19,9 @@ install:
   - docker-compose up --build -d
   - sleep 15
   - docker ps
-  - java -jar ./artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/db_app -P:jdbc.user=app -P:jdbc.password=pass &
-  - wait-for-it localhost:9999 -t 100
-  - chmod +x gradlew
+#  - java -jar ./artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/db_app -P:jdbc.user=app -P:jdbc.password=pass &
+#  - wait-for-it localhost:9999 -t 100
+#  - chmod +x gradlew
 
 build_script:
   - ./gradlew test --info
