@@ -9,16 +9,19 @@ branches:
 build: off
 
 install:
+  - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+  - sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+  - sudo apt-get -qq update
+  - sudo apt-get install google-chrome-stable > /dev/null
+  - sudo apt-get install wait-for-it > /dev/null
   - sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
   - sudo chmod +x /usr/local/bin/docker-compose
-  - docker-compose up -d
+  - docker-compose -f /home/appveyor/projects/aqa-3.2-SQL/docker-compose.yml up --build -d
+  - sleep 15
   - docker ps
-  - netstat -na | grep "3306"
-  - sudo apt-get -qq update
-  - sudo apt-get install wait-for-it > /dev/null
+  - java -jar artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/db_app -P:jdbc.user=app -P:jdbc.password=pass &
+  - wait-for-it localhost:9999 -t 100
+  - chmod +x gradlew
 
 build_script:
-  - java -jar ./artifacts/app-deadline.jar -P:jdbc.url=jdbc:mysql://localhost:3306/db_app -P:jdbc.user=app -P:jdbc.password=pass &
-  - wait-for-it localhost:9999 -t 100
-  - netstat -na | grep "9999"
-  - curl --show-error -X GET 'http://localhost:9999/'
+  - ./gradlew test --info
