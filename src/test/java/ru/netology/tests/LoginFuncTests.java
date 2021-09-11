@@ -1,0 +1,45 @@
+package ru.netology.tests;
+
+import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import ru.netology.data.ConnectionHelper;
+import ru.netology.data.DataHelper;
+import ru.netology.pages.LoginPage;
+
+import static com.codeborne.selenide.Selenide.open;
+
+public class LoginFuncTests {
+
+    @BeforeEach
+    void setUp() {
+        open("http://localhost:9999");
+    }
+
+    @Test
+    void shouldLogin() {
+        val loginPage = new LoginPage();
+        val authInfo = DataHelper.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val verificationCode = ConnectionHelper.getCode();
+        val dashboardPage = verificationPage.validVerify(verificationCode);
+        dashboardPage.validFields();
+    }
+
+    @Test
+    void shouldNotVerify() {
+        val loginPage = new LoginPage();
+        val authInfo = DataHelper.getAuthInfo();
+        val verificationPage = loginPage.validLogin(authInfo);
+        val invalidVerificationCode = DataHelper.getInvalidVerificationCode();
+        verificationPage.invalidVerify(invalidVerificationCode);
+    }
+
+    @Test
+    void shouldNotLogin() {
+        val loginPage = new LoginPage();
+        val invalidAuthInfo = DataHelper.getInvalidAuthInfo();
+        loginPage.invalidLogin(invalidAuthInfo);
+    }
+
+}
