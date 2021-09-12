@@ -9,6 +9,7 @@ import java.time.Duration;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.sleep;
+import static org.openqa.selenium.Keys.*;
 
 public class LoginPage {
 
@@ -26,14 +27,31 @@ public class LoginPage {
     }
 
     public void invalidLogin(DataHelper.AuthInfo info) {
+        loginField.sendKeys(SHIFT, ARROW_UP, DELETE);
         loginField.setValue(info.getLogin());
+        passwordField.sendKeys(CONTROL, "a", BACK_SPACE);
         passwordField.setValue(info.getPassword());
         loginButton.click();
+
         errorBox.shouldBe(Condition.visible);
         $("[data-test-id=error-notification]>.notification__title")
                 .shouldHave(text("Ошибка"));
         $("[data-test-id=error-notification]>.notification__content")
                 .shouldHave(text("Ошибка! Неверно указан логин или пароль"));
+    }
+
+    public void blockedLogin (DataHelper.AuthInfo info) {
+        loginField.sendKeys(SHIFT, ARROW_UP, DELETE);
+        loginField.setValue(info.getLogin());
+        passwordField.sendKeys(CONTROL, "a", BACK_SPACE);
+        passwordField.setValue(info.getPassword());
+        loginButton.click();
+
+        errorBox.shouldBe(Condition.visible);
+        $("[data-test-id=error-notification]>.notification__title")
+                .shouldHave(text("Ошибка"));
+        $("[data-test-id=error-notification]>.notification__content")
+                .shouldHave(text("Ошибка! Пользователь заблокирован"));
     }
 
 

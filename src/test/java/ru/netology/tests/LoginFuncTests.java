@@ -7,6 +7,7 @@ import ru.netology.data.DataHelper;
 import ru.netology.pages.LoginPage;
 
 import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.sleep;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static ru.netology.data.ConnectionHelper.*;
 import static ru.netology.data.DataHelper.getAuthInfo;
@@ -62,15 +63,21 @@ public class LoginFuncTests {
     }
 
     @Test
-    void should_butNot_BlockIncorrectPassword() {
+    void shouldBlockIncorrectPassword() {
         val loginPage = new LoginPage();
         val blockerAuthInfo = getToBlockAuthInfo();
+        val correctAuthInfo = getAuthInfo();
+        /*
         loginPage.invalidLogin(blockerAuthInfo);
         loginPage.invalidLogin(blockerAuthInfo);
         loginPage.invalidLogin(blockerAuthInfo);
         String actual = getStatusFor(getAuthInfo().getLogin());
-        System.out.println(actual);
-        assertEquals("active", actual); //"blocked"
+        assertEquals("blocked", actual);
+        */
+        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.blockedLogin(correctAuthInfo);
     }
 
 }

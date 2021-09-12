@@ -24,7 +24,7 @@ public class DataHelper {
     }
 
     public static AuthInfo getToBlockAuthInfo(){
-        return new AuthInfo("petya","987987");
+        return new AuthInfo("vasya","987987");
     }
 
     @Value
