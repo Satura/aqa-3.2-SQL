@@ -66,18 +66,15 @@ public class LoginFuncTests {
     void shouldBlockIncorrectPassword() {
         val loginPage = new LoginPage();
         val blockerAuthInfo = getToBlockAuthInfo();
-        val correctAuthInfo = getAuthInfo();
-        /*
+
         loginPage.invalidLogin(blockerAuthInfo);
         loginPage.invalidLogin(blockerAuthInfo);
         loginPage.invalidLogin(blockerAuthInfo);
-        String actual = getStatusFor(getAuthInfo().getLogin());
-        assertEquals("blocked", actual);
-        */
-        loginPage.invalidLogin(blockerAuthInfo);
-        loginPage.invalidLogin(blockerAuthInfo);
-        loginPage.invalidLogin(blockerAuthInfo);
-        loginPage.blockedLogin(correctAuthInfo);
+        //String actual = getStatusFor(getAuthInfo().getLogin());
+        //assertEquals("blocked", actual);
+
+        loginPage.blockedLogin(blockerAuthInfo);
+
     }
 
 }
