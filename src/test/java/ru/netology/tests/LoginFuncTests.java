@@ -69,12 +69,12 @@ public class LoginFuncTests {
 
         loginPage.invalidLogin(blockerAuthInfo);
         loginPage.invalidLogin(blockerAuthInfo);
-        loginPage.invalidLogin(blockerAuthInfo);
+//        loginPage.invalidLogin(blockerAuthInfo);
+        loginPage.blockedLogin();
 
         String actual = getStatusFor(getAuthInfo().getLogin());
         assertEquals("blocked", actual);
 
-        loginPage.blockedLogin();
 
     }
 
