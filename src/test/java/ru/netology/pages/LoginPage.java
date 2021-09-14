@@ -40,11 +40,11 @@ public class LoginPage {
                 .shouldHave(text("Ошибка! Неверно указан логин или пароль"));
     }
 
-    public void blockedLogin (DataHelper.AuthInfo info) {
-        loginField.sendKeys(SHIFT, ARROW_UP, DELETE);
-        loginField.setValue(info.getLogin());
-        passwordField.sendKeys(CONTROL, "a", BACK_SPACE);
-        passwordField.setValue(info.getPassword());
+    public void blockedLogin () { //DataHelper.AuthInfo info
+//        loginField.sendKeys(SHIFT, ARROW_UP, DELETE);
+//        loginField.setValue(info.getLogin());
+//        passwordField.sendKeys(CONTROL, "a", BACK_SPACE);
+//        passwordField.setValue(info.getPassword());
         loginButton.click();
 
         errorBox.shouldBe(Condition.visible);
